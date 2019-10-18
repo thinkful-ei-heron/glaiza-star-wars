@@ -13,11 +13,11 @@ class StarWarsSearch extends React.Component {
         }
     }
 
-    updateSearchName = (name) => {
+    updateSearchName(name) {
         this.setState({ searchName: {value: name, touched: true}})
     }
 
-    validateSearchName = () => {
+    validateSearchName(){
         const searchName = this.state.searchName.value.trim();
 
         if(searchName.length === 0) {
@@ -30,8 +30,10 @@ class StarWarsSearch extends React.Component {
 
         const { searchName } = this.state;
         this.props.handleSearchSubmit(searchName.value);
+        console.log(searchName.value);
         event.target.searchName.value = '';
         this.setState({
+            value: '',
             touched: false
         })
     }
@@ -53,7 +55,7 @@ class StarWarsSearch extends React.Component {
     }
 }
 
-// StarWarsSearch.propTypes = {
-//     handleSearchSubmit: PropTypes.func   
-// }
+StarWarsSearch.propTypes = {
+    handleSearchSubmit: PropTypes.func   
+}
 export default StarWarsSearch;

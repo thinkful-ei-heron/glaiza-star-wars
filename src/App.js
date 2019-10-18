@@ -30,8 +30,8 @@ class App extends React.Component {
     })
     .then(resData => {
       if(resData.count === 0) {
-        this.setData({
-          results: null,
+        this.setState({
+          results:  null,
           searched: true
         })
       } else {
@@ -49,6 +49,8 @@ class App extends React.Component {
   }
 
   render() {
+    console.log(this.state.error)
+
     return (
       <main className="App">
         <h1>Search your favorite star wars character</h1>
