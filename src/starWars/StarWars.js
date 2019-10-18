@@ -1,9 +1,13 @@
 import React from 'react';
 
-export default class StarWars extends React.Component {
+class StarWars extends React.Component {
     render() {
         return(
-            <div> Temporary </div>
+            <div> 
+                <h2> Star Wars Component </h2> 
+            </div>
         )
     }
 }
+
+export default StarWars;
