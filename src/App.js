@@ -1,42 +1,42 @@
 import React from 'react';
-import StarWars from './starWars/StarWars';
+import StarWarsSearch from './starWars/StarWarsSearch';
 
 class App extends React.Component {
   
   constructor(props) {
     super(props);
       this.state = {
-        people: [],
-        loading: false,
+        results: [],
         error: null
-
       }
   }
 
-  componentDidMount() {
-    fetch('https://swapi.co/api/people', {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json',
-      }
-    })
+  handleSearchSubmit = (name) => {
+    fetch(`https://swapi.co/api/people?search=${name}`)
     .then(res => {
       if(!res.ok) {
         throw new Error(res.statusText)
       }
       return res.json()
     })
-    .then()
-    .catch(error => this.setState( {error}))
+    .then(resData => {
+      this.setState({ results: resData.results.map(result => {
+        console.log(result);
+        return { name: result.name}
+      })})
+    })
+    .catch(err => this.setState( {error: err.message}))
   }
 
 
   render() {
+    // const result = this.state.results
     return (
       <main className="App">
-        <h1>Star Wars App</h1>
-        <StarWars />
-      </main>
+        <div>Star Wars App</div>
+        <StarWarsSearch handleSearchSubmit={this.handleSearchSubmit}/>
+    
+    </main>
     );
   }
  

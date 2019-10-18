@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import StarWars from './StarWars';
+import StarWarsSearch from './StarWarsSearch';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<StarWars />, div);
+  ReactDOM.render(<StarWarsSearch />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
