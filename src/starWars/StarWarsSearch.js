@@ -30,9 +30,9 @@ class StarWarsSearch extends React.Component {
 
         const { searchName } = this.state;
         // console.log(`Search Name: ${searchName}`);
-        this.props.handleSearchSubmit(searchName);
-        console.log(`Handle Submit Here`);
-        event.target.searchName.value = '';
+        this.props.handleSearchSubmit(searchName.value);
+        // console.log(`Search Name ${this.state.searchName}`);
+        // event.target.searchName.value = '';
         this.setState({
             touched: false
         })
@@ -45,7 +45,7 @@ class StarWarsSearch extends React.Component {
         return(
             <form className="star-wars-search" onSubmit={e => this.handleSubmit(e)}>
                 <label htmlFor="searchName">Search By Name:</label>
-                <input type="text" id="searchName" name="searchName" onChange={e => this.updateSearchName(e.target.value)}/>
+                <input type="text" id="searchName" name="searchName" placeholder="skywalker" onChange={e => this.updateSearchName(e.target.value)}/>
                 
                 {this.state.searchName.touched && (<ValidationError message={searchNameError} />)}
                 
