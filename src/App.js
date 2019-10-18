@@ -2,26 +2,27 @@ import React from 'react';
 import StarWarsSearch from './starWars/StarWarsSearch';
 import StarWarsResults from './starWarsResult/StarWarsResults';
 import ErrorBoundary from './errorBoundary/ErrorBoundary';
+import Spinner from './spinner/Spinner';
 
+import './App.css'
 class App extends React.Component {
   
   constructor(props) {
     super(props);
       this.state = {
-        results: [],
+        results: null,
         searched: false,
-        error: null
+        error: null,
+        loading: false
       }
   }
 
   handleSearchSubmit = (name) => {
-    const url = `https://swapi.co/api/people?search=${name}`;
-    console.log(url);
-    fetch(url, {
-      method: 'GET',
-      headers: {'content-type': 'application/json'}
-    })
+    this.setState({ loading: true})
+
+    fetch(`https://swapi.co/api/people?search=${name}`)
     .then(res => {
+      this.setState({ loading: false})
       if(!res.ok) {
         throw new Error(res.statusText)
       }
@@ -37,7 +38,7 @@ class App extends React.Component {
         this.setState({ 
           searched: true, 
           results: resData.results.map(result => {
-            console.log(result.name)
+            // console.log(result.name)
             return { name: result.name}
         })
 
@@ -47,17 +48,17 @@ class App extends React.Component {
     .catch(err => this.setState( {error: err.message}))
   }
 
- 
   render() {
-    console.log(this.state.results);
-    // console.log(this.state.searched);
     return (
       <main className="App">
-        <h1>Search below your favorite star wars character</h1>
+        <h1>Search your favorite star wars character</h1>
+        
+        {this.state.error && <h2>Sorry, an error occurred: {this.state.error}</h2>}
+        
         <ErrorBoundary>
           <StarWarsSearch handleSearchSubmit={this.handleSearchSubmit}/>
         </ErrorBoundary>
-
+          {this.state.loading && <Spinner />}
         <ErrorBoundary>
           {this.state.searched && <StarWarsResults results={this.state.results} />}
         </ErrorBoundary> 

@@ -1,0 +1,22 @@
+
+*{
+    font-family: serif;
+    font-weight: 600;
+  }
+
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5% 5%;
+    margin: 3% 3%;
+    background-color: lightgray;
+    font-size: 2rem;
+    
+}
+
+h1 {
+text-transform: uppercase;
+font-size: 1.5rem;
+font-weight: 900;
+}
