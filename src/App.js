@@ -38,7 +38,6 @@ class App extends React.Component {
         this.setState({ 
           searched: true, 
           results: resData.results.map(result => {
-            // console.log(result.name)
             return { name: result.name}
         })
 
@@ -49,11 +48,11 @@ class App extends React.Component {
   }
 
   render() {
-    console.log(this.state.error)
-
+  
     return (
+      // <img></img>
       <main className="App">
-        <h1>Search your favorite star wars character</h1>
+        <h1>Star wars search project</h1>
         
         {this.state.error && <h2>Sorry, an error occurred: {this.state.error}</h2>}
         
