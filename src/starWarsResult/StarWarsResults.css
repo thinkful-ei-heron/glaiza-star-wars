@@ -1,3 +1,11 @@
 li {
     list-style: none;
+    font-family: sans-serif;
+    color: gold;
+    margin: 1rem;
+}
+
+.noResult {
+    font-family: sans-serif;
+    color: red;
 }

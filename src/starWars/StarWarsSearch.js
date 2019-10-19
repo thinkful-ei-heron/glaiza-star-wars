@@ -1,6 +1,7 @@
 import React from 'react';
 import ValidationError from '../validationError/ValidationError'
 import PropTypes from 'prop-types';
+import '../starWars/starWarsSearch.css';
 
 class StarWarsSearch extends React.Component {
     constructor(props) {
@@ -10,56 +11,48 @@ class StarWarsSearch extends React.Component {
                 value: '',
                 touched: false
             },
-            searchType: {
-                value: '',
-                touched: false
-            }
+            searchType: 'people'
         }
     }
 
-    updateKeyword(name) {
+    updateKeyword = (name) => {
         this.setState({ keyword: {value: name, touched: true}})
     }
 
-    updateSearchType(type) {
-        this.setState({ searchType: {value: type, touched: true}})
+    updateSearchType = (type) =>{
+        this.setState({ searchType: type.target.value})
     }
 
     validateKeyword(){
-        const keyword = this.state.keyword.value.trim();
-
-        if(keyword.length === 0) {
-            return 'Name is required!!!'
+        if(this.state.keyword.value === '' || this.state.keyword.value === undefined) {
+            return 'Please enter a keyword!!!'
         }
     }
 
-    // validateSearchType() {
-    //     const searchType = this.state.searchType.value.trim();
-    // }
+    validateSearchType() {
+        if(this.state.searchType === null) {
+            return 'Please select an option!!!'
+        }
+    }
 
     handleSubmit = (event) => {
         event.preventDefault();
-
         const { keyword, searchType } = this.state;
-        this.props.handleSearchSubmit(keyword.value, searchType.value);
-        console.log(keyword.value);
+        this.props.handleSearchSubmit(keyword.value, searchType);
         event.target.keyword.value = '';
         this.setState({
-            value: '',
+            keyword: '',
             touched: false
         })
     }
 
     render() {
-
         const keywordError = this.validateKeyword();
-
         return(
             <form className="star-wars-search" onSubmit={e => this.handleSubmit(e)} >
 
                 <label htmlFor="searchFor">Search For:</label>
-                <select name="searchFor" onChange={e => this.updateSearchType(e.target.value)}>
-                    <option value="" selected disabled>Select an option:</option>
+                <select name="searchFor"   onChange={e => this.updateSearchType(e)}>
                     <option value="people">People</option>
                     <option value="planets">Planets</option>
                     <option value="films">Films</option>
@@ -69,10 +62,10 @@ class StarWarsSearch extends React.Component {
                 </select>
 
                 <label htmlFor="keyword">Keyword:</label>
-                <input type="text" id="keyword" name="keyword" placeholder="E.g Skywalker" onChange={e => this.updateKeyword(e.target.value)}/>
+                <input type="text" id="keyword" name="keyword" onChange={e => this.updateKeyword(e.target.value)}/>
                 {this.state.keyword.touched && (<ValidationError message={keywordError} />)}
                 
-                <button type="submit" disabled ={this.validateKeyword()}>Search Now</button>
+                <button type="submit" disabled ={ this.validateKeyword() }>Search Now</button>
             </form>
         )
     }

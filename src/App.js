@@ -3,8 +3,10 @@ import StarWarsSearch from './starWars/StarWarsSearch';
 import StarWarsResults from './starWarsResult/StarWarsResults';
 import ErrorBoundary from './errorBoundary/ErrorBoundary';
 import Spinner from './spinner/Spinner';
+import logo from './img/starwars.png'
+import swordLogo from './img/sword.png';
+import './app.css'
 
-import './App.css'
 class App extends React.Component {
   
   constructor(props) {
@@ -51,18 +53,21 @@ class App extends React.Component {
   render() {
   
     return (
-      // <img></img>
+      
       <main className="App">
-        <h1>Star wars search</h1>
-        
+        <img src={logo} alt="star wars"/>
+        <img src={swordLogo} alt="sword" className="sword"/>
+        <h1>search</h1>
+       
         {this.state.error && <h2>Sorry, an error occurred: {this.state.error}</h2>}
         
         <ErrorBoundary>
           <StarWarsSearch handleSearchSubmit={this.handleSearchSubmit}/>
         </ErrorBoundary>
           {this.state.loading && <Spinner />}
+        
         <ErrorBoundary>
-          {this.state.searched && <StarWarsResults results={this.state.results} />}
+            {this.state.searched && <StarWarsResults results={this.state.results} />}
         </ErrorBoundary> 
     </main>
     );

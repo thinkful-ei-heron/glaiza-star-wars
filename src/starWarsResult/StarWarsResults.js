@@ -6,7 +6,7 @@ export default class StarWarsResults extends React.Component {
     render() {
         if(this.props.results === null) {
             return (
-                <p className='noResult'>Sorry, No Results Found!!!</p>
+                <p className='noResult'>Sorry, No Results Found!</p>
             )
         } else {
             return (
