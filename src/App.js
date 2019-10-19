@@ -17,10 +17,10 @@ class App extends React.Component {
       }
   }
 
-  handleSearchSubmit = (name) => {
+  handleSearchSubmit = (keyword, searchType) => {
     this.setState({ loading: true})
 
-    fetch(`https://swapi.co/api/people?search=${name}`)
+    fetch(`https://swapi.co/api/${searchType}?search=${keyword}`)
     .then(res => {
       this.setState({ loading: false})
       if(!res.ok) {
@@ -37,8 +37,9 @@ class App extends React.Component {
       } else {
         this.setState({ 
           searched: true, 
-          results: resData.results.map(result => {
-            return { name: result.name}
+          loading: false,
+           results: resData.results.map(result => {
+            return { name: result.name ? result.name : result.title}
         })
 
       })
@@ -52,7 +53,7 @@ class App extends React.Component {
     return (
       // <img></img>
       <main className="App">
-        <h1>Star wars search project</h1>
+        <h1>Star wars search</h1>
         
         {this.state.error && <h2>Sorry, an error occurred: {this.state.error}</h2>}
         

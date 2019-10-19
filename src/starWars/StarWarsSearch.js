@@ -6,32 +6,44 @@ class StarWarsSearch extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            searchName: {
+            keyword: {
+                value: '',
+                touched: false
+            },
+            searchType: {
                 value: '',
                 touched: false
             }
         }
     }
 
-    updateSearchName(name) {
-        this.setState({ searchName: {value: name, touched: true}})
+    updateKeyword(name) {
+        this.setState({ keyword: {value: name, touched: true}})
     }
 
-    validateSearchName(){
-        const searchName = this.state.searchName.value.trim();
+    updateSearchType(type) {
+        this.setState({ searchType: {value: type, touched: true}})
+    }
 
-        if(searchName.length === 0) {
+    validateKeyword(){
+        const keyword = this.state.keyword.value.trim();
+
+        if(keyword.length === 0) {
             return 'Name is required!!!'
         }
     }
 
+    // validateSearchType() {
+    //     const searchType = this.state.searchType.value.trim();
+    // }
+
     handleSubmit = (event) => {
         event.preventDefault();
 
-        const { searchName } = this.state;
-        this.props.handleSearchSubmit(searchName.value);
-        console.log(searchName.value);
-        event.target.searchName.value = '';
+        const { keyword, searchType } = this.state;
+        this.props.handleSearchSubmit(keyword.value, searchType.value);
+        console.log(keyword.value);
+        event.target.keyword.value = '';
         this.setState({
             value: '',
             touched: false
@@ -40,16 +52,27 @@ class StarWarsSearch extends React.Component {
 
     render() {
 
-        const searchNameError = this.validateSearchName();
+        const keywordError = this.validateKeyword();
 
         return(
-            <form className="star-wars-search" onSubmit={e => this.handleSubmit(e)}>
-                <label htmlFor="searchName">Search By Name:</label>
-                <input type="text" id="searchName" name="searchName" placeholder="E.g Skywalker" onChange={e => this.updateSearchName(e.target.value)}/>
+            <form className="star-wars-search" onSubmit={e => this.handleSubmit(e)} >
+
+                <label htmlFor="searchFor">Search For:</label>
+                <select name="searchFor" onChange={e => this.updateSearchType(e.target.value)}>
+                    <option value="" selected disabled>Select an option:</option>
+                    <option value="people">People</option>
+                    <option value="planets">Planets</option>
+                    <option value="films">Films</option>
+                    <option value="starships">StarShips</option>
+                    <option value="species">Species</option>
+                    <option value="vehicles">Vehicles</option>
+                </select>
+
+                <label htmlFor="keyword">Keyword:</label>
+                <input type="text" id="keyword" name="keyword" placeholder="E.g Skywalker" onChange={e => this.updateKeyword(e.target.value)}/>
+                {this.state.keyword.touched && (<ValidationError message={keywordError} />)}
                 
-                {this.state.searchName.touched && (<ValidationError message={searchNameError} />)}
-                
-                <button type="submit" disabled ={this.validateSearchName()}>Search</button>
+                <button type="submit" disabled ={this.validateKeyword()}>Search Now</button>
             </form>
         )
     }
